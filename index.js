@@ -97,6 +97,11 @@ app.post('/auth/register', registerValidation, async (req, res) => {
   }
 });
 
+app.get('/auth/me', (req, res) => {
+  try {
+  } catch (err) {}
+});
+
 app.listen(4444, (err) => {
   if (err) {
     return console.log(err);
