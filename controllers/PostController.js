@@ -104,3 +104,30 @@ export const create = async (req, res) => {
     });
   }
 };
+
+export const update = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    await PostModel.updateOne(
+      {
+        _id: postId,
+      },
+      {
+        title: req.body.title,
+        text: req.body.text,
+        imageURL: req.body.imageURL,
+        user: req.userId,
+        tags: req.body.tags,
+      },
+    );
+
+    res.json({
+      success: true,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      msg: 'Не удалось обновить статью',
+    });
+  }
+};

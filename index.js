@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 import checkAuth from './utils/checkAuth.js';
 import { register, login, getMe } from './controllers/UserController.js';
-import { create, getAll, getOne, remove } from './controllers/PostController.js';
+import { create, getAll, getOne, remove, update } from './controllers/PostController.js';
 
 mongoose
   .connect('mongodb+srv://admin:wwwwww@cluster0.tzq99.mongodb.net/blog?retryWrites=true&w=majority')
@@ -22,7 +22,7 @@ app.get('/posts', getAll);
 app.get('/posts/:id', getOne);
 app.post('/posts', checkAuth, postCreateValidation, create);
 app.delete('/posts/:id', checkAuth, remove);
-// app.patch('/posts', update);
+app.patch('/posts/:id', checkAuth, update);
 
 app.listen(4444, (err) => {
   if (err) {
