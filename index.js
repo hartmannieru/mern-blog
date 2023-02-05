@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import multer from "multer";
 import mongoose from "mongoose";
@@ -22,9 +24,7 @@ import {
 import { checkAuth, handleValidationErrors } from "./utils/index.js";
 
 mongoose
-  .connect(
-    "mongodb+srv://anna:kolchina1997@cluster0.issuusv.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.DB)
   .then(() => console.log("Database OK"))
   .catch((err) => console.log("Database Error", err));
 
@@ -80,7 +80,7 @@ app.patch(
   update
 );
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }

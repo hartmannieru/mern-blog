@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import UserModel from '../models/User.js';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import UserModel from "../models/User.js";
 
 export const register = async (req, res) => {
   try {
@@ -20,10 +20,10 @@ export const register = async (req, res) => {
       {
         _id: user._id,
       },
-      'secret123',
+      "secret123",
       {
-        expiresIn: '30d',
-      },
+        expiresIn: "30d",
+      }
     );
 
     const { passwordHash, ...userData } = user._doc;
@@ -35,7 +35,7 @@ export const register = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: 'Не удалось зарегистрироваться',
+      msg: "Не удалось зарегистрироваться",
     });
   }
 };
@@ -46,23 +46,26 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        msg: 'Пользователь не найден',
+        msg: "Пользователь не найден",
       });
     }
-    const isValidPass = await bcrypt.compare(req.body.password, user._doc.passwordHash);
+    const isValidPass = await bcrypt.compare(
+      req.body.password,
+      user._doc.passwordHash
+    );
     if (!isValidPass) {
       return res.status(400).json({
-        msg: 'Неверный логин или пароль',
+        msg: "Неверный логин или пароль",
       });
     }
     const token = jwt.sign(
       {
         _id: user._id,
       },
-      'secret123',
+      "secret123",
       {
-        expiresIn: '30d',
-      },
+        expiresIn: "30d",
+      }
     );
 
     const { passwordHash, ...userData } = user._doc;
@@ -74,7 +77,7 @@ export const login = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: 'Не удалось войти',
+      msg: "Не удалось войти",
     });
   }
 };
@@ -85,7 +88,7 @@ export const getMe = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: 'Пользователь не найден',
+        message: "Пользователь не найден",
       });
     }
 
@@ -95,7 +98,7 @@ export const getMe = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      msg: 'Нет доступа',
+      msg: "Нет доступа",
     });
   }
 };
