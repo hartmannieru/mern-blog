@@ -1,6 +1,5 @@
 import PostModel from "../models/Post.js";
 // import cloudinary from "../utils/cloudinary.js";
-import streamifier from "streamifier";
 export const getLastTags = async (req, res) => {
   try {
     const posts = await PostModel.find().limit(5).exec();
