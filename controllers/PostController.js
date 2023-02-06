@@ -1,5 +1,5 @@
 import PostModel from "../models/Post.js";
-import cloudinary from "../utils/cloudinary.js";
+// import cloudinary from "../utils/cloudinary.js";
 import streamifier from "streamifier";
 export const getLastTags = async (req, res) => {
   try {
@@ -100,18 +100,18 @@ export const remove = async (req, res) => {
 };
 
 export const create = async (req, res) => {
-  const imageName = req.body.imageUrl;
-  const result = await cloudinary.uploader.upload(`${imageName}`, {
-    public_id: `${Date.now()}`,
-    resource_type: "auto",
-    folder: "mern",
-  });
+  // const imageName = req.body.imageUrl;
+  // const result = await cloudinary.uploader.upload(`${imageName}`, {
+  //   public_id: `${Date.now()}`,
+  //   resource_type: "auto",
+  //   folder: "mern",
+  // });
 
   try {
     const doc = new PostModel({
       title: req.body.title,
       text: req.body.text,
-      imageURL: result.url,
+      imageURL: res.body.imageUrl,
       tags: req.body.tags,
       user: req.userId,
     });
