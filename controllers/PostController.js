@@ -104,7 +104,7 @@ export const create = async (req, res) => {
   const result = await cloudinary.uploader.upload(`${imageName}`, {
     public_id: `${Date.now()}`,
     resource_type: "auto",
-    folder: "mern-demo",
+    folder: "mern",
   });
 
   try {
