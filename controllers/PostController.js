@@ -55,7 +55,7 @@ export const getOne = async (req, res) => {
 
         res.json(doc);
       }
-    );
+    ).populate("user");
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -111,7 +111,7 @@ export const create = async (req, res) => {
       title: req.body.title,
       text: req.body.text,
       imageURL: result.url,
-      tags: req.body.tags,
+      tags: req.body.tags.split(","),
       user: req.userId,
     });
 
@@ -126,6 +126,12 @@ export const create = async (req, res) => {
 };
 
 export const update = async (req, res) => {
+  const imageName = req.body.imageUrl;
+  const result = await cloudinary.uploader.upload(`${imageName}`, {
+    public_id: `${Date.now()}`,
+    resource_type: "auto",
+    folder: "mern",
+  });
   try {
     const postId = req.params.id;
     await PostModel.updateOne(
@@ -135,9 +141,9 @@ export const update = async (req, res) => {
       {
         title: req.body.title,
         text: req.body.text,
-        imageURL: req.body.imageURL,
+        imageURL: result.url,
         user: req.userId,
-        tags: req.body.tags,
+        tags: req.body.tags.split(","),
       }
     );
 
